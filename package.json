@@ -1,0 +1,20 @@
+{
+  "name": "file2consul",
+  "version": "1.0.0",
+  "description": "Update consul from a file",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hussainmudassir/file2consul.git"
+  },
+  "author": "Syed Mudassir Hussain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hussainmudassir/file2consul/issues"
+  },
+  "homepage": "https://github.com/hussainmudassir/file2consul#readme"
+}
