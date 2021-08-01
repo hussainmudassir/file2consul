@@ -1,6 +1,6 @@
 {
   "name": "file2consul",
-  "version": "1.1.2",
+  "version": "1.1.1",
   "description": "Update consul from a file",
   "main": "./index.js",
   "bin": "./index.js",
