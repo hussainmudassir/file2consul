@@ -1,0 +1,34 @@
+spring:
+ application:
+   name: test-service
+ profiles: dev
+ cloud:
+   vault:
+     fail-fast: true
+     uri: {vault's endpoint}
+     authentication: APPROLE
+     scheme: https
+     app-role:
+       role-id: {role-id}
+       secret-id: {service_id}
+       role: testservice
+       app-role-path: approle
+     generic:
+       enabled: true
+       backend: test-service
+       profile-separator: '/'
+       application-name: test-service
+       default-context: test-service
+   consul:
+     host: 'consul-host-endpoint'
+     port: 443
+     scheme: https
+       #      discovery:
+       #        instanceId: ${application.name}
+       #        healthCheckInterval: 15s
+       #        enabled: false
+       #        health-check-path: /test-service/hc
+       #        register-health-check: false
+     config:
+       enabled: true
+       prefix: test-service/dev
