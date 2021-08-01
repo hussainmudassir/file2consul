@@ -1,4 +1,3 @@
-
 var file2consul = require('./lib/index');
 const fs = require('fs');
 const yaml = require('js-yaml');
