@@ -1,8 +1,4 @@
-/*
-*To run this, either you can choose env wise properties or we can specify file but the path of the index.js has to from source root in the command
-*1.node file2consul/index.js -f application-prod.properties (when the source root is resources)
-*2.NODE_ENV=staging node file2consul/index.js
-*/
+
 var file2consul = require('./lib/index');
 const fs = require('fs');
 const yaml = require('js-yaml');
