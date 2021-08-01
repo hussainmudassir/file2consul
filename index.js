@@ -51,10 +51,9 @@ var validateArgv = function(argv, env) {
 };
 
 function setConsulConfig(env) {
-console.log(JSON.stringify(env));
     let env_prop;
     if(!env || !env.cloud || !env.cloud.consul || !env.profiles) {
-	console.log("taking default Props");
+	    console.log("taking default Props");
         env_prop = {
             "host": "127.0.0.1",
             "port": 8500,
@@ -71,7 +70,6 @@ console.log(JSON.stringify(env));
     global.secure = process.env.CONSUL_SECURE || env_prop.scheme && env_prop.scheme==='https';
     global.token = process.env.TOKEN || "";
     global.config_path = process.env.CONFIG_PATH || env_prop.config.prefix + '/' + env.application.name;
-    console.log(global.config_path);
     return;
 };
 
@@ -89,6 +87,8 @@ function getConsulFromConfig() {
             defaultDta = data[i].spring;
         }
     }
+    console.log(defaultDta)
+
     return defaultDta;
 }
 
