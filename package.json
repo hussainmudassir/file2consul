@@ -1,11 +1,14 @@
 {
   "name": "file2consul",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Update consul from a file",
-  "main": "./index.js",
-  "bin": "./index.js",
+  "main": "index.js",
+  "bin": {
+    "file2consul": "./index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "file2consul": "file2consul"
   },
   "repository": {
     "type": "git",
