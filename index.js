@@ -3,13 +3,6 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const { env } = require('process');
 
-//default config
-// global.endpoint = process.env.CONSUL_ENDPOINT || "127.0.0.1";
-// global.port = process.env.CONSUL_PORT || 8500;
-// global.secure = process.env.CONSUL_SECURE || false;
-// global.token = process.env.TOKEN || null;
-// global.config_file = null;
-
 //optional
 global.keys_to_ignore = ["reload.resource.bean.name"];
 
