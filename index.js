@@ -1,28 +1,24 @@
+#!/usr/bin/env node
+
+/*
+To run this, either you can choose env wise properties or we can specify file but the path of the index.js has to from source root in the command
+1.node file2consul/index.js -f application-prod.properties (when the source root is resources)
+2.NODE_ENV=staging node file2consul/index.js
+*/
+
 var file2consul = require('./lib/index');
+var config = require('./config.js');
 const fs = require('fs');
 const yaml = require('js-yaml');
 const { env } = require('process');
-
 //optional
-global.keys_to_ignore = ["reload.resource.bean.name"];
-
+global.keys_to_ignore = config.keys_to_ignore;
 
 var get_config_file = function(env) {
     console.log("Assigning config file according to the env");
-    if (env && env.profiles && env.profiles === "staging") global.config_file = "application-staging.properties";
-    else if (env && env.profiles && env.profiles == "dev") global.config_file = "application-staging.properties";
+    if (env && env.profiles && env.profiles === "dev") global.config_file = "application-dev.properties";
     else if (env && env.profiles && env.profiles == "prod")global.config_file = "application-prod.properties";
     else global.config_file = "application.properties";
-};
-
-var processConfig = function () {
-    file2consul.processConfig(function (err) {
-        if (err) {
-            console.log(err);
-            process.exit(-1);
-        } else
-            console.log("File2Consul was process successfully.");
-    });
 };
 
 var validateArgv = function(argv, env) {
@@ -40,24 +36,16 @@ var validateArgv = function(argv, env) {
 
 function setConsulConfig(env) {
     let env_prop;
-    if(!env || !env.cloud || !env.cloud.consul || !env.profiles) {
-	    console.log("taking default Props");
-        env_prop = {
-            "host": "127.0.0.1",
-            "port": 8500,
-            "scheme": "http",
-            "token": "",
-            "config": {
-                "prefix": "test-service"
-            }
-        };
+    if(!env || !env.cloud || !env.cloud.consul) {
+	    console.log("Setting default Props");
+        env_prop = config.default_env_prop;
     };
     env_prop = env_prop != null ?  env_prop : env.cloud.consul;
-    global.endpoint = process.env.CONSUL_ENDPOINT || env_prop.host;
-    global.port = process.env.CONSUL_PORT || env_prop.port;
-    global.secure = process.env.CONSUL_SECURE || env_prop.scheme && env_prop.scheme==='https';
-    global.token = process.env.TOKEN || "";
-    global.config_path = process.env.CONFIG_PATH || env_prop.config.prefix + '/' + env.application.name;
+    global.endpoint = env_prop.host;
+    global.port = env_prop.port;
+    global.secure = env_prop.scheme && env_prop.scheme==='https';
+    global.token = "";
+    global.config_path = env_prop.config.prefix + '/' + env.application.name;
     return;
 };
 
@@ -71,14 +59,20 @@ function getConsulFromConfig() {
                 console.log({"selected": data[i]})
                 return data[i].spring;
             }
-        } else if (data[i].spring && !data[i].spring.profiles) {
-            defaultDta = data[i].spring;
         }
     }
-    console.log(defaultDta)
-
     return defaultDta;
 }
+
+var processConfig = function () {
+    file2consul.processConfig(function (err) {
+        if (err) {
+            console.log(err);
+            process.exit(-1);
+        } else
+            console.log("File2Consul was process successfully.");
+    });
+};
 
 (function () {
     if (require.main === module) {
